@@ -4,4 +4,5 @@ matplotlib==3.7.4
 tqdm==4.64.1
 scipy==1.10.1
 ipykernel==6.27.0
+torch==2.1.1
 #python==3.8.18
