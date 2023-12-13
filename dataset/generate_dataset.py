@@ -50,16 +50,3 @@ def generate_normal_dataset(num_samples, vector_length, mean=0.5, sigma=0.1):
         dataset.append((random_vector, label))
 
     return dataset
-
-# visualize truncated normal
-'''
-mean = 0.5
-sigma = 0.1
-lower_bound, upper_bound = 0, 1
-a, b = (lower_bound - mean) / sigma, (upper_bound - mean) / sigma
-truncated_normal = truncnorm(a, b, loc=mean, scale=sigma)
-x = np.linspace(0,1,100)
-dist=truncnorm(a, b,loc=0.5, scale = 0.1)
-plt.plot(x, dist.pdf(x), 'k-', lw=2, label='normalised truncated Gaussian')
-plt.show()
-'''
