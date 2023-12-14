@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 
 # get local data matrix
-def local_neighborhood_matrix(vector, radius):
+def local_matrix(vector, radius):
     """
     Extracts the local neighborhood of each element in a vector with periodic boundary conditions.
 
