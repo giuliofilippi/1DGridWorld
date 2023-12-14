@@ -1,8 +1,9 @@
 # base imports
 import numpy as np
+import torch
 
 # function imports
-from functions import local_matrix
+from functions import local_matrix, bit_map
 
 # Lattice class
 class Lattice:
@@ -54,7 +55,10 @@ class Lattice:
             local_data_mat = local_matrix(self.state, radius=self.radius)
             new_state = np.zeros(self.length)
             for i in range(self.length):
-                new_state[i] = model(local_data_mat[i]) # threshold at 0 if needed
+                # input must be torch tensor
+                input = torch.tensor(local_data_mat[i]).float()
+                # threshold at 0 and map to -1, 1
+                new_state[i] = bit_map(model(input) > 0) 
             self.memory.append(new_state)
             self.state = new_state
 
