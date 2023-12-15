@@ -2,6 +2,9 @@
 import numpy as np
 from scipy.stats import truncnorm
 
+# functions imports
+from functions import random_initial_config
+
 # uniform dataset
 def generate_uniform_dataset(num_samples, vector_length):
     dataset = []
@@ -9,16 +12,10 @@ def generate_uniform_dataset(num_samples, vector_length):
     for _ in range(num_samples):
         # Uniform probability of -1
         prob = np.random.random()
-
         # Generate a random vector with -1 and 1
-        random_vector = np.random.choice([-1, 1], size=vector_length, replace=True, p=[prob, 1-prob])
-
-        # Calculate the proportion of -1 in the vector
-        proportion_minus_one = np.sum(random_vector == -1) / vector_length
-
+        random_vector = random_initial_config(vector_length, prob)
         # Determine the label based on the proportion
-        label = np.ones(vector_length) if proportion_minus_one <= 0.5 else -1 * np.ones(vector_length)
-
+        label = np.ones(vector_length) if prob <= 0.5 else -1 * np.ones(vector_length)
         # Append the pair to the dataset
         dataset.append((random_vector, label))
 
@@ -35,17 +32,11 @@ def generate_normal_dataset(num_samples, vector_length, mean=0.5, sigma=0.1):
 
     for _ in range(num_samples):
         # Sample probability p from the truncated normal distribution
-        probability = truncated_normal.rvs()
-
-        # Generate a random vector with -1 and 1 based on the sampled probability
-        random_vector = np.random.choice([-1, 1], size=vector_length, replace=True, p=[probability, 1 - probability])
-
-        # Calculate the proportion of -1 in the vector
-        proportion_minus_one = np.sum(random_vector == -1) / vector_length
-
+        prob = truncated_normal.rvs()
+        # Generate a random vector with -1 and 1
+        random_vector = random_initial_config(vector_length, prob)
         # Determine the label based on the proportion
-        label = np.ones(vector_length) if proportion_minus_one <= 0.5 else -1 * np.ones(vector_length)
-
+        label = np.ones(vector_length) if prob <= 0.5 else -1 * np.ones(vector_length)
         # Append the pair to the dataset
         dataset.append((random_vector, label))
 

@@ -3,7 +3,7 @@ import numpy as np
 import torch
 
 # function imports
-from functions import local_matrix, bit_map
+from functions import local_matrix
 
 # Lattice class
 class Lattice:
@@ -43,8 +43,6 @@ class Lattice:
         Perform a forward pass through a model for a specified number of iterations.
 
         Parameters:
-        - length (int): The length of the input vector.
-        - radius (int): The radius for extracting the local neighborhood.
         - model (torch.nn.Module): The neural network model.
         - num_iter (int): The number of iterations to perform.
 
@@ -58,7 +56,6 @@ class Lattice:
                 # input must be torch tensor
                 input = torch.tensor(local_data_mat[i]).float()
                 # threshold at 0 and map to -1, 1
-                new_state[i] = bit_map(model(input) > 0) 
+                new_state[i] = torch.sign(model(input))
             self.memory.append(new_state)
             self.state = new_state
-
